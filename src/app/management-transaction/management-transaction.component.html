@@ -1,0 +1,203 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xl-4 col-md-4">
+            <div class="card bg-pattern">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class="fa fa-archive text-primary h4 ml-3"></i>
+                    </div>
+                    <h5 class="font-size-20 mt-0 pt-1">{{maxPageTotalTransaksi.totalTransaksi}}</h5>
+                    <p class="text-muted mb-0">Total Transaksi</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-4">
+            <div class="card bg-pattern">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class="fa fa-th text-primary h4 ml-3"></i>
+                    </div>
+                    <h5 class="font-size-20 mt-0 pt-1" *ngIf="maxPageTotalTransaksi.estimasiProfit!=null||maxPageTotalTransaksi.estimasiProfit!=undefined; else estimasiTransaksi">Rp{{toFormatHarga(maxPageTotalTransaksi.estimasiProfit)}}</h5>
+                    <ng-template #estimasiTransaksi><h5 class="font-size-20 mt-0 pt-1">Rp{{toFormatHarga(0)}}</h5></ng-template>
+                    <p class="text-muted mb-0">Transaksi Terbayarkan</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-4 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group mb-0">
+                            <label>Search by
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" #search (change)="changeSearch(search.value)">
+                                    <option value="id">Id</option>
+                                    <option value="invoiceNumber">Nomor Tagihan</option>
+                                    <option value="virtualAccountNumber">Nomor VA</option>
+                                    <option value="createdDate">Waktu Dibuat</option>
+                                    <option value="expiredDate">Waktu Kadaluarsa</option>
+                                    <option value="statusTransaksi">Status</option>
+                                </select>
+                            </label>
+                            <div class="input-group mb-0">
+                                <div *ngIf="search.value=='id'">
+                                    <input type="search" [(ngModel)]="id" (ngModelChange)="searching()" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Search..." aria-describedby="project-search-addon" />
+                                    <!--<div class="input-group-append">
+                                        <button href="#" class="btn btn-danger" type="button" id="project-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
+                                    </div>-->
+                                </div>
+                                <div *ngIf="search.value=='invoiceNumber'" >
+                                    <input type="search"  [(ngModel)]="transactionRequest.invoiceNumber" (ngModelChange)="searching()" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Search..." aria-describedby="project-search-addon" />
+                                    <!--<div class="input-group-append">
+                                        <button href="#" class="btn btn-danger" type="button" id="project-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
+                                    </div>-->
+                                </div>
+                                <div *ngIf="search.value=='virtualAccountNumber'" >
+                                    <input type="search" [(ngModel)]="transactionRequest.virtualAccountNumber" (ngModelChange)="searching()" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="Search..." aria-describedby="project-search-addon" />
+                                    <!--<div class="input-group-append">
+                                        <button href="#" class="btn btn-danger" type="button" id="project-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
+                                    </div>-->
+                                </div>
+                                <div *ngIf="search.value=='createdDate'" >
+                                    <input type="datetime-local" [(ngModel)]="transactionRequest.createdDateMulai" (ngModelChange)="searching()" [ngModelOptions]="{standalone: true}" class="form-control" aria-describedby="project-search-addon" />
+                                    <input type="datetime-local" [(ngModel)]="transactionRequest.createdDateAkhir" (ngModelChange)="searching()" [ngModelOptions]="{standalone: true}" class="form-control" aria-describedby="project-search-addon" />
+                                </div>
+                                <div *ngIf="search.value=='expiredDate'" >
+                                    <input type="datetime-local" [(ngModel)]="transactionRequest.expiredDateMulai" (ngModelChange)="searching()" [ngModelOptions]="{standalone: true}" class="form-control" aria-describedby="project-search-addon" />
+                                    <input type="datetime-local" [(ngModel)]="transactionRequest.expiredDateAkhir" (ngModelChange)="searching()" [ngModelOptions]="{standalone: true}" class="form-control" aria-describedby="project-search-addon" />
+                                </div>
+                                <div *ngIf="search.value=='statusTransaksi'">
+                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" [(ngModel)]="transactionRequest.statusTransaksi" [ngModelOptions]="{standalone: true}">
+                                        <option value="Terbayarkan">Terbayarkan</option>
+                                        <option value="BelumBayar">Belum Bayar</option>
+                                        <option value="Batal">Batal</option>
+                                      </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+    <!--modal delete-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Delete Transaction</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <table>
+                    <tr>
+                        <td>Id</td>
+                        <td> : {{deleteTransactionNewResponse.id}}</td>
+                    </tr>
+                    <tr>
+                        <td>Nomor Tagihan</td>
+                        <td> : {{deleteTransactionNewResponse.invoiceNumber}}</td>
+                    </tr>
+                    <tr>
+                        <td>Nomor VA</td>
+                        <td> : {{deleteTransactionNewResponse.virtualAccountNumber}}</td>
+                    </tr> 
+                    <tr>
+                        <td>Waktu Dibuat</td>
+                        <td> : {{formatDate(deleteTransactionNewResponse.createdDate)}}</td>
+                    </tr>
+                    <tr>
+                        <td>Waktu Kadaluarsa</td>
+                        <td> : {{formatDate(deleteTransactionNewResponse.expiredDate)}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button (click)="deleteTransactionById()" data-dismiss="modal" type="button" class="btn btn-primary" style="background-color: red;">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="row">
+        <div class="col-lg-15">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive project-list">
+                        <p>Order by 
+                            <span>
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" #sort (change)="changeSort(sort.value)">
+                                    <option value="id">Id</option>
+                                    <option value="invoiceNumber">Nomor Tagihan</option>
+                                    <option value="virtualAccountNumber">Nomor VA</option>
+                                    <option value="createdDate">Waktu Dibuat</option>
+                                    <option value="expiredDate">Waktu Kadaluarsa</option>
+                                    <option value="statusTransaksi">Status</option>
+                                </select>
+                            </span>
+                        </p>
+                        <p>Reverse order <input type="checkbox" #reverseOrder (change)="changeReverse(reverseOrder.checked)"></p>
+                        <table class="table project-table table-centered table-nowrap" id="main-container">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Nomor Tagihan</th>
+                                    <th scope="col">Nomor VA</th>
+                                    <th scope="col">Waktu Dibuat</th>
+                                    <th scope="col">Waktu Kadaluarsa</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Harga</th>
+                                    <th scope="col"> </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let transaction of transactionAll">
+                                    <th scope="row"><a style="color:inherit" href="javascript:void(0)" (click)="getTransaction(transaction.id)">{{transaction.id}}</a></th>
+                                    <td *ngIf="transaction.invoiceNumber!=null;else invoiceNumber" >{{transaction.invoiceNumber}}</td>
+                                    <ng-template #invoiceNumber><td class="table-content">-</td></ng-template>
+                                    <td *ngIf="transaction.virtualAccountNumber!=null;else virtualAccountNumber" >{{transaction.virtualAccountNumber}}</td>
+                                    <ng-template #virtualAccountNumber><td class="table-content">-</td></ng-template>
+                                    <td *ngIf="transaction.createdDate!=null;else createdDate">{{formatDate(transaction.createdDate)}}</td>
+                                    <ng-template #createdDate><td class="table-content">-</td></ng-template>
+                                    <td *ngIf="transaction.expiredDate!=null;else expiredDate">{{formatDate(transaction.expiredDate)}}</td>
+                                    <ng-template #expiredDate><td class="table-content">-</td></ng-template>
+                                    <td *ngIf="transaction.statusTransaksi!=null;else statusTransaksi">{{spaceBeetweenCapitalLetter(transaction.statusTransaksi)}}</td>
+                                    <ng-template #statusTransaksi ><td class="table-content">-</td></ng-template>
+                                    <td *ngIf="transaction.harga!=null;else harga">Rp{{toFormatHarga(transaction.harga)}}</td>
+                                    <ng-template #harga ><td class="table-content">-</td></ng-template>
+                                    <td>
+                                        <div class="action">
+                                            <a href="#" class="text-success mr-4" data-toggle="Toggle" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil h5 m-0"></i></a>
+                                            <a href="#" (click)="onOpenModalDelete(transaction)" class="text-danger" data-toggle="modal" data-target="#deleteModal" data-placement="top" title="" data-original-title="Close"><i class="fa fa-remove h5 m-0" ></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end project-list -->
+
+                    <div class="pt-3">
+                        <ul class="pagination justify-content-end mb-0"><!-- class="page-item disabled" [disabled]="page+1<maxPageTotalTransaksi.maxPage"-->
+                            <li [ngClass]="{'disabled' : page==1}" class="page-item">
+                                <button class="page-link" [disabled]="page==1"  tabindex="-1" aria-disabled="true" (click)="changePage(page-1)">Previous</button>
+                            </li>
+                            <li *ngIf="page>1" class="page-item"><button class="page-link" (click)="changePage(page-1)">{{page-1}}</button></li>
+                            <li class="page-item active"><button class="page-link" >{{page}}</button></li>
+                            <li *ngIf="page+1<=maxPageTotalTransaksi.maxPage" class="page-item"><button class="page-link" (click)="changePage(page+1)">{{page+1}}</button></li>
+                            <li [ngClass]="{'disabled' : page+1>maxPageTotalTransaksi.maxPage}" class="page-item">
+                                <button class="page-link" (click)="changePage(page+1)">Next</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>

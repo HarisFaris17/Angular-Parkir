@@ -1,0 +1,64 @@
+<div class="container">
+
+  <table width="100%">
+    <tr>
+      <td width="75px">
+        <div class="logotype">Sparkindo</div>
+      </td>
+      <td width="400px" class="bg-success"
+        style="color: #fff; border-left:15px solid #fff; padding-left:30px;font-size:26px;font-weight:bold;letter-spacing:-1px;">
+        Korfirmasi Pembayaran</td>
+      <td></td>
+    </tr>
+  </table>
+  <h3>Detail Pembayaran</h3>
+  <table width="100%" style="border-collapse: collapse;">
+    <tr>
+      <td width="180px" class="column-title">Email
+      <td>
+      <td class="column-detail">{{getEmail()}}
+      <td>
+    </tr>
+    <tr>
+      <td class="column-title">Nama Lengkap
+      <td>
+      <td class="column-detail">{{getFullName()}}
+      <td>
+    </tr>
+    <tr>
+      <td class="column-title">Username
+      <td>
+      <td class="column-detail">{{getUsername()}}
+      <td>
+      </td>
+    <tr>
+      <td class="column-title">Parkir
+      <td>
+      <td class="column-detail">{{getParkirs()}}
+      <td>
+    </tr>
+    <tr>
+      <td class="column-title">Waktu Masuk
+      <td>
+      <td class="column-detail">{{getWaktuBooking()}}
+      <td>
+    </tr>
+    <tr>
+      <td class="column-title">Waktu Keluar
+      <td>
+      <td class="column-detail">{{getWaktuKeluar()}}
+      <td>
+    </tr>
+    <tr>
+      <td class="column-title">Metode Pembayaran
+      <td>
+      <td class="column-detail">{{getBank()}}
+      <td>
+    </tr>
+  </table>
+  
+  <div class="text-center">
+    <button *ngIf="!clicked" class="btn btn-outline-success" (click)="confirmNewTransaksi();clicked=true">Konfirmasi</button>
+    <p *ngIf="clicked" class="text-warning">Loading...</p>
+  </div>
+</div><!-- container -->

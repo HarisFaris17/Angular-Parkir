@@ -1,0 +1,97 @@
+<body>
+
+  <!--<div class="inputForm">
+      Name *: <input type="text" id="Username" required>
+      Number of Seats *: <input type="number" id="Numseats" required>
+      <br/><br/>
+      <button onclick="takeData()">Start Selecting</button>
+    </div>-->
+  <h1 style="text-align: center;font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; ">Universitas Jenderal
+    Soedirman</h1>
+  <div class="column column-left">
+    <table id="booking">
+      <tr>
+        <td class="tdBooking">Waktu Booking</td>
+        <td class="tdBooking"> <input type="datetime-local" style="display: inline; width: auto;" name="date"
+            class="form-control" (change)="displayParkirs()" [(ngModel)]="waktuBooking"></td>
+      </tr>
+      <tr>
+        <td class="tdBooking">Lama Booking</td>
+        <td class="tdBooking">
+          <select class="form-select form-select-sm input-group mb-0" style="display: inline;width: auto;"
+            (change)="displayParkirs()" aria-label=".form-select-sm example" [(ngModel)]="lamaJamBooking">
+            <option value="1">1 Jam</option>
+            <option value="2">2 Jam</option>
+            <option value="3">3 Jam</option>
+            <option value="4">4 Jam</option>
+            <option value="5">5 Jam</option>
+            <option value="6">6 Jam</option>
+          </select></td>
+      </tr>
+    </table>
+  </div>
+  <div class="column column-center">
+    <div class="seatStructure">
+      <span style="margin: auto;" [hidden]="displayParkir"><h3 style="color: red;">Silahkan Pilih Waktu Booking</h3></span>
+      <table id="seatsBlock" style="margin: auto;" [hidden]="!displayParkir">
+        <p id="notification"></p>
+  
+        <tr>
+          <td></td>
+          <td>A</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>B</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td colspan="30"></td>
+          <td colspan="30" rowspan="100">
+            <div class="smallBox greenBox">Selected Seat</div> <br />
+            <div class="smallBox redBox">Reserved Seat</div><br />
+            <div class="smallBox emptyBox">Empty Seat</div><br />
+          </td>
+        </tr>
+        <ng-container *ngFor="let item of [].constructor(4); let i = index">
+          <tr class="seatVGap">
+            <td>{{i+1}}<input [disabled]="disabledParkir[i]" [(ngModel)]="selectedParkir[i]" (change)="selectParkir()" type="checkbox" class="seats" value="A{{i+1}}"></td>
+            <td></td>
+            <td>{{i+5}}<input [disabled]="disabledParkir[i+4]" [(ngModel)]="selectedParkir[i+4]" (change)="selectParkir()" type="checkbox" class="seats" value="A{{i+5}}"></td>
+            <td></td>
+            <td style="border-left: 2px solid black;"></td>
+            <td>{{i+1}}<input type="checkbox" [disabled]="disabledParkir[i+8]" [(ngModel)]="selectedParkir[i+8]" (change)="selectParkir()" class="seats" value="B{{i+1}}"></td>
+            <td></td>
+            <td>{{i+5}}<input type="checkbox" [disabled]="disabledParkir[i+12]" [(ngModel)]="selectedParkir[i+12]" (change)="selectParkir()" class="seats" value="B{{i+5}}"></td>
+            <td></td>
+          </tr>
+        </ng-container>
+      </table>
+    </div>
+  </div>
+  <div class="column column-right">
+    <table class="payment">
+      <tr>
+        <td><h3>Parkir</h3></td>
+        <td><h3> : <span *ngIf="parkirs.length==0">--</span>{{parkirs}}</h3></td>
+      </tr>
+      <tr>
+        <td ><h4>Biaya</h4></td>
+        <td><h4> : Rp{{(harga).toLocaleString('de-DE', {minimumFractionDigits: 2})}}</h4></td>
+      </tr>
+    </table>
+    <div>
+      <p >Metode Pembayaran</p>
+      <select class="form-select form-select-sm" aria-label=".form-select-sm example" [(ngModel)]="bank">
+        <option value="MANDIRI_VA">VA Mandiri</option>
+        <option value="BSI_VA">VA BSI</option>
+        <option value="BCA_VA">VA BCA</option>
+        <option value="BRI_VA">VA BRI</option>
+        <option value="ALFA_O2O">Alfamart</option>
+    </select>
+    <button *ngIf="bank.length!==0&&parkirs.length!==0" style="margin-left: 50px;" type="button" (click)="submitParkir()" class="btn btn-outline-dark">Checkout</button>
+    </div>
+  </div>
+  

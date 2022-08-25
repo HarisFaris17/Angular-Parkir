@@ -1,0 +1,155 @@
+body
+{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#Username
+{
+  border:none;
+  border-bottom:1px solid;
+}
+
+.column{
+  display:inline-block;
+  width:33.33%;
+  margin-right:-4px;
+}
+.column-center{
+  padding-top: 50px;
+  height:200px;
+  
+}
+
+.column-left{
+  height: 200px;
+  padding-top: 50px;
+}
+
+.column-right{
+  height: 200px;
+  padding-top: 50px;
+}
+
+.payment{
+  text-align: left;
+}
+
+.smallBox::before
+{
+  content:".";
+  width:15px;
+  height:15px;
+  float:left;
+  margin-right:10px;
+}
+.greenBox::before
+{
+  content:"";
+  background:Green;
+}
+.redBox::before
+{
+  content:"";
+  background:Red;
+}
+.emptyBox::before
+{
+  content:"";
+  box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    background-color:#ccc;
+}
+
+.seats
+{
+  border:1px solid red;background:yellow;
+} 
+
+
+
+.seatGap
+{
+  width:40px;
+}
+
+.seatVGap
+{
+  height: 3em;
+}
+
+table
+{
+  text-align:center;
+}
+
+
+.Displaytable
+{
+  text-align:center;
+}
+.Displaytable td, .Displaytable th {
+    border: 1px solid;
+    text-align: left;
+}
+
+textarea
+{
+  border:none;
+  background:transparent;
+}
+
+
+
+input[type=checkbox] {
+    width:0px;
+    margin-right:30px;
+}
+
+input[type=checkbox]:before {
+    content: "";
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align:middle;
+    text-align: center;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    background-color:#ccc;
+}
+input[type=checkbox]:disabled::before{
+    content: "";
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align:middle;
+    text-align: center;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(255, 255, 255, .8);
+    background-color:red;
+}
+
+/* .disabled::before{
+  content: "";
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    vertical-align:middle;
+    text-align: center;
+    box-shadow: inset 0px 2px 3px 0px rgba(0, 0, 0, .3), 0px 1px 0px 0px rgba(241, 105, 105, 0.8);
+    background-color: red;
+} */
+
+input[type=checkbox]:checked:before {
+    background-color:Green;
+    font-size: 15px;
+}
+
+#booking{
+  margin-left: 2%;
+  padding-top: 2%;
+  width: auto;
+  text-align: left;
+}
+
+.tdBooking{
+  padding: 10px 10px 10px 10px;
+}
+
+

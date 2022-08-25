@@ -1,0 +1,218 @@
+<div class="container">
+    <div class="row">
+        <div class="col-xl-4 col-md-4">
+            <div class="card bg-pattern">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class="fa fa-archive text-primary h4 ml-3"></i>
+                    </div>
+                    <h5 class="font-size-20 mt-0 pt-1">{{getTotalParkir()}}</h5>
+                    <p class="text-muted mb-0">Total Parkir</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-4 col-md-4">
+            <div class="card bg-pattern">
+                <div class="card-body">
+                    <div class="float-right">
+                        <i class="fa fa-th text-primary h4 ml-3"></i>
+                    </div>
+                    <h5 class="font-size-20 mt-0 pt-1">Rp{{getEstimasiProfit()}}</h5>
+                    <p class="text-muted mb-0">Estimasi Profit</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-xl-4 col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="form-group mb-0">
+                            <label>Search by
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" #search (change)="selectSearch(search.value)">
+                                    <option value="Id">Id</option>
+                                    <option value="waktuTransaksi">WaktuTransaksi</option>
+                                    <option value="waktuBooking">WaktuBooking</option>
+                                    <option value="waktuBooking">WaktuMasuk</option>
+                                    <option value="waktuKeluar">WaktuKeluar</option>
+                                    <option value="status">Status</option>
+                                    <option value="username">Username</option>
+                                  </select>
+                            </label>
+                            <div class="input-group mb-0">
+                                <div *ngIf="search.value=='Id'" >
+                                    <input type="search" (change)="searchById(key.value)" #key class="form-control" placeholder="Search..." aria-describedby="project-search-addon" />
+                                    <!--<div class="input-group-append">
+                                        <button href="#" class="btn btn-danger" type="button" id="project-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
+                                    </div>-->
+                                </div>
+                                <div *ngIf="search.value=='waktuTransaksi'" >
+                                    <input type="datetime-local" (change)="searchByWaktu(datemulai.value,dateakhir.value,'transaksi')" #datemulai class="form-control" aria-describedby="project-search-addon" />
+                                    <input type="datetime-local" (change)="searchByWaktu(datemulai.value,dateakhir.value,'transaksi')" #dateakhir class="form-control" aria-describedby="project-search-addon" />
+                                </div>
+                                <div *ngIf="search.value=='waktuBooking'" >
+                                    <input type="datetime-local" (change)="searchByWaktu(datemulai.value,dateakhir.value,'booking')" #datemulai class="form-control" aria-describedby="project-search-addon" />
+                                    <input type="datetime-local" (change)="searchByWaktu(datemulai.value,dateakhir.value,'booking')" #dateakhir class="form-control" aria-describedby="project-search-addon" />
+                                </div>
+                                <div *ngIf="search.value=='waktuMasuk'" >
+                                    <input type="datetime-local" (change)="searchByWaktu(datemulai.value,dateakhir.value,'masuk')" #datemulai class="form-control" aria-describedby="project-search-addon" />
+                                    <input type="datetime-local" (change)="searchByWaktu(datemulai.value,dateakhir.value,'masuk')" #dateakhir class="form-control" aria-describedby="project-search-addon" />
+                                </div>
+                                <div *ngIf="search.value=='waktuKeluar'" >
+                                    <input type="datetime-local" (change)="searchByWaktu(datemulai.value,dateakhir.value,'keluar')" #datemulai class="form-control" aria-describedby="project-search-addon" />
+                                    <input type="datetime-local" (change)="searchByWaktu(datemulai.value,dateakhir.value,'keluar')" #dateakhir class="form-control" aria-describedby="project-search-addon" />
+                                </div>
+                                <div *ngIf="search.value=='status'">
+                                    <select class="form-select form-select-sm" aria-label=".form-select-sm example" #searchStatus (change)="searchByStatus(searchStatus.value)">
+                                        <option value="">----</option>
+                                        <option value="Terbukukan">Terbukukan</option>
+                                        <option value="TerbukukanBelumBayar">Terbukukan Belum Bayar</option>
+                                        <option value="TerisiOffline">Terisi Offline</option>
+                                        <option value="TerisiOnline">Terisi Online</option>
+                                        <option value="Keluar">Keluar</option>
+                                      </select>
+                                </div>
+                                <div *ngIf="search.value=='username'" >
+                                    <input type="text" (change)="searchByUsername(username.value)" #username class="form-control" placeholder="Search..." aria-describedby="project-search-addon" />
+                                    <div class="input-group-append">
+                                        <button href="#" class="btn btn-danger" type="button" id="project-search-addon"><i class="fa fa-search search-icon font-12"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+
+    <!--modal delete-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Delete Parkir id {{deleteParkir?.id}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button (click)="deleteParkirById(deleteParkir.id)" data-dismiss="modal" type="button" class="btn btn-primary" style="background-color: red;">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <div class="row">
+        <div class="col-lg-15">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive project-list">
+                        <p>Order by 
+                            <span>
+                                <select class="form-select form-select-sm" aria-label=".form-select-sm example" #order (change)="selectOrder(order.value,reverseorder.checked)">
+                                    <option value="Id">Id</option>
+                                    <option value="waktuTransaksi">WaktuTransaksi</option>
+                                    <option value="waktuBooking">WaktuBooking</option>
+                                    <option value="waktuBooking">WaktuMasuk</option>
+                                    <option value="waktuKeluar">WaktuKeluar</option>
+                                    <option value="status">Status</option>
+                                    <option value="username">Username</option>
+                                </select>
+                            </span>
+                        </p>
+                        <p>Reverse order <input type="checkbox" #reverseorder (change)="selectOrder(order.value,reverseorder.checked)"></p>
+                        <table class="table project-table table-centered table-nowrap" id="main-container">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Id</th>
+                                    <th scope="col">Waktu Transaksi</th>
+                                    <th scope="col">Waktu Booking</th>
+                                    <th scope="col">Waktu Masuk</th>
+                                    <th scope="col">Waktu Keluar</th>
+                                    <th scope="col">Lama Pesanan</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Harga</th>
+                                    <th scope="col">Username</th>
+                                    <th scope="col">Kode Parkir</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let parkir of parkirAll">
+                                    <th scope="row">{{parkir.id}}</th>
+                                    <td *ngIf="parkir.waktuTransaksi!=null;else waktuTransaksi" >{{formatDate(parkir.waktuTransaksi)}}</td>
+                                    <ng-template #waktuTransaksi><td style="color: red;text-align: center;">-</td></ng-template>
+                                    <td *ngIf="parkir.waktuBooking!=null;else waktuBooking" >{{formatDate(parkir.waktuBooking)}}</td>
+                                    <ng-template #waktuBooking><td style="color: red;text-align: center;">-</td></ng-template>
+                                    <td *ngIf="parkir.waktuMasuk!=null;else waktuMasuk">{{formatDate(parkir.waktuMasuk)}}
+                                        <!--<span class="text-success font-12"><i class="mdi mdi-checkbox-blank-circle mr-1"></i> Completed</span>-->
+                                    </td>
+                                    <!--TODO: insert kode parkir-->
+                                    <ng-template #waktuMasuk><td style="color: red;text-align: center;">-</td></ng-template>
+                                    <td *ngIf="parkir.waktuKeluar!=null;else waktuKeluar">{{formatDate(parkir.waktuKeluar)}}</td>
+                                    <ng-template #waktuKeluar><td style="color: red;text-align: center;">-</td></ng-template>
+                                    <td *ngIf="parkir.lamaJamBooking!=null;else lamaJamBooking">{{parkir.lamaJamBooking}} jam</td>
+                                    <ng-template #lamaJamBooking ><td style="color: red;text-align: center;">-</td></ng-template>
+                                    <td *ngIf="parkir.lamaJamBooking!=null;else lamaJamBooking">{{spaceBeetweenCapitalLetter(parkir.status)}}</td>
+                                    <ng-template #lamaJamBooking ><td style="color: red;text-align: center;">-</td></ng-template>
+                                    <td *ngIf="parkir.harga!=null;else harga">Rp{{parkir.harga.toLocaleString('de-DE', {minimumFractionDigits: 2})}}</td>
+                                    <ng-template #harga><td style="color: red;text-align: center;">-</td></ng-template>
+                                    <td *ngIf="parkir.username!=null;else username">{{parkir.username}}</td>
+                                    <ng-template #username><td style="color: red;text-align: center;">------</td></ng-template>
+                                    <td>{{parkir.kodeParkir}}</td>
+                                    <td>
+                                        <div class="action">
+                                            <a href="#" class="text-success mr-4" data-toggle="Toggle" data-placement="top" title="" data-original-title="Edit"><i class="fa fa-pencil h5 m-0"></i></a>
+                                            <a href="#" (click)="onOpenModalDelete(parkir)" class="text-danger" data-toggle="modal" data-target="#deleteModal" data-placement="top" title="" data-original-title="Close"><i class="fa fa-remove h5 m-0" ></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- end project-list -->
+
+                    <div class="pt-3">
+                        <ul class="pagination justify-content-end mb-0">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end row -->
+</div>
+
+
+<style type="text/css">
+body{
+    background:#f3f3f3;
+    margin-top:20px;
+    color: #616f80;
+}
+.card {
+    border: none;
+    margin-bottom: 24px;
+    -webkit-box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+    box-shadow: 0 0 13px 0 rgba(236,236,241,.44);
+}
+
+.avatar-xs {
+    height: 2.3rem;
+    width: 2.3rem;
+}
+</style>

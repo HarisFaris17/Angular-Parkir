@@ -1,0 +1,102 @@
+<div class="container">
+
+    <table width="100%">
+      <tr>
+        <td width="75px">
+          <div class="logotype">Sparkindo</div>
+        </td>
+        <td width="400px" [ngClass]="{'bg-info menunggu-pembayaran' : getStatus()=='BelumBayar',
+                                        'bg-success terbayarkan': getStatus()=='Terbayarkan',
+                                        'bg-danger batal': getStatus()=='Batal'}"
+          style="color: #fff; border-left:15px solid #fff; padding-left:30px;font-size:26px;font-weight:bold;letter-spacing:-1px;">
+          </td>
+        <td></td>
+      </tr>
+    </table>
+    <h3 style="display: inline-block;">Detail Pembayaran</h3>
+    <table width="100%" style="border-collapse: collapse; ">
+      <tr>
+        <td width="180px" class="column-title">Email
+        <td>
+        <td class="column-detail">{{getEmail()}}
+        <td>
+      </tr>
+      <tr>
+        <td class="column-title">Nama Lengkap
+        <td>
+        <td class="column-detail">{{getFullName()}}
+        <td>
+      </tr>
+      <tr>
+        <td class="column-title">Username
+        <td>
+        <td class="column-detail">{{getUsername()}}
+        <td>
+        </td>
+      <tr>
+        <td class="column-title">Parkir
+        <td>
+        <td class="column-detail">{{getParkirs()}}
+        <td>
+      </tr>
+      <tr *ngIf="getStatus()=='Terbayarkan'">
+        <td class="column-title">Kode Booking
+        <td>
+        <td class="column-detail">{{getKodeBooking()}}
+        <td>
+      </tr>
+      <tr>
+        <td class="column-title">Waktu Masuk
+        <td>
+        <td class="column-detail">{{getWaktuBooking()}}
+        <td>
+      </tr>
+      <tr>
+        <td class="column-title">Waktu Keluar
+        <td>
+        <td class="column-detail">{{getWaktuKeluar()}}
+        <td>
+      </tr>
+      <tr>
+        <td class="column-title">Metode Pembayaran
+        <td>
+        <td class="column-detail">{{getBank()}}
+        <td>
+      </tr>
+      <tr>
+        <td class="column-title">Nomor Virtual Account
+        <td>
+        <td class="column-detail">{{getVirtualAccount()}}
+        <td>
+      </tr>
+      <tr>
+        <td class="column-title">Waktu Transaksi
+        <td>
+        <td class="column-detail">{{getCreatedDate()}}
+        <td>
+      </tr>
+      <tr>
+        <td class="column-title">Waktu Kadaluarsa
+        <td>
+        <td class="column-detail">{{getExpiredDate()}}
+        <td>
+      </tr>
+      <tr>
+        <td class="column-title">Nomor Invoice
+        <td>
+        <td class="column-detail">{{getInvoiceNumber()}}
+        <td>
+      </tr>
+      <tr>
+        <td class="column-title">Harga
+        <td>
+        <td class="column-detail">Rp{{getHarga()}}
+        <td>
+      </tr>
+      <div *ngIf="getStatus()=='BelumBayar'">
+        <span>Untuk cara pembayaran</span>
+        <a class="btn btn-info" style="color: #fff;" [href]="getHowToPayPage()" target="_blank">Klik Disini</a>
+      </div>
+    </table>
+  </div><!-- container -->
+  
